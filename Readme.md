@@ -1,37 +1,39 @@
 #pgen
 
-Generate models and controllers and routes automatically scaffold for a CRUD using the Play Framework.
+Generate models, controllers and routes automatically for a CRUD using the Play Framework on Java.
 
-The base of the Rails generator to develop.
+It is based on the same idea of the *rails generator*.
 
 ###Pre-requisites:
 
  - Application using Play Framework Built
- - Your packages must be app /models app / controllers conf / routes
+ - Your packages / folder structure must be:
+   - `app/models` 
+   - `app/controllers`
+   - `conf/routes`
 
 ###How to use:
 
-- Install the node JS
-- Open the command line and type: npm install -g PGEN
-
-Go to the root folder of your project in Play exemple:
+- Install the [nodeJS](http://nodejs.org/)
+- Open the command line and type: `npm install -g pgen`
+- On command line, go to the root folder of your project in Play:
 
 ```sh
 $ c:\project\playproject>
 ```
 
+- Use the command `pgen g` to generate the files:
 ```sh
 $ c:\project\playproject> pgen g Car name:String price:BigDecimal
 ```
-2 classes will be generated:
+  It will be generated 2 classes: 
+   - *app/models/Car.java* - model class with Ebean annotations
+   - *app/controllers/Cars.java* - controller class that has methods in the REST pattern: all, save, list, update, delete
+ 
+It will also change the *conf/routes* file to add all REST routes to the controller.
 
-- Car.java - Class model with annotations Ebean
-- Cars.java - controller class that has methods in the rest pattern: all, save, list, update, delete
 
-Will change the routes file to add all routes as the controller.
-
-
-  Usage: 
+###Usage: 
 
      pgen -help:
 

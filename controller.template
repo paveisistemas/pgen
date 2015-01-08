@@ -1,0 +1,121 @@
+package controllers;
+
+import java.util.List;
+import com.avaje.ebean.Ebean;
+import com.avaje.ebean.TxType;
+import com.avaje.ebean.annotation.Transactional;
+import com.fasterxml.jackson.databind.JsonNode;
+import models.{{modelName}};
+import play.libs.Json;
+import play.mvc.BodyParser;
+import play.mvc.Controller;
+import play.mvc.Result;
+
+public class {{modelName | pluralize }} extends Controller{
+
+  public static Result all() {
+    return ok(Json.toJson({{modelName}}.finder.all()));
+  }
+
+  public static Result find(Long id) {
+
+     Result result = null;
+
+     {{modelName}} {{modelName | lower}} = {{modelName}}.finder.byId(id);
+
+     if ({{modelName | lower}} != null) {
+       result = ok(Json.toJson({{modelName | lower}}));
+     } else {
+       result = notFound();
+     }
+
+     return result;
+  }
+
+  @BodyParser.Of(BodyParser.Json.class)
+  @Transactional(type = TxType.REQUIRES_NEW)
+  public static Result save() {
+   Result result = null;
+   Ebean.beginTransaction();
+   try {
+
+     JsonNode jsonNode = request().body().asJson();
+     {{modelName}} {{modelName | lower}} = Json.fromJson(jsonNode, {{modelName}}.class);
+     {{modelName | lower}}.save();
+
+     Ebean.commitTransaction();
+     result = created();
+
+   } catch (Exception e) {
+     Ebean.rollbackTransaction();
+     result = internalServerError("Internal Server Error");
+   } finally {
+     Ebean.endTransaction();
+   }
+   return result;
+  }
+
+  @BodyParser.Of(BodyParser.Json.class)
+  @Transactional(type = TxType.REQUIRES_NEW)
+  public static Result update(Long id){
+
+    Result result = null;
+
+    Ebean.beginTransaction();
+
+    try{
+      JsonNode jsonNode = request().body().asJson();
+      {{modelName}} updated{{modelName}} = Json.fromJson(jsonNode, {{modelName}}.class);
+
+      {{modelName}} old{{modelName}} = {{modelName}}.finder.byId(id);
+
+      old{{modelName}} = updated{{modelName}};
+      old{{modelName}}.update();
+
+      Ebean.commitTransaction();
+
+      result = ok();
+
+    } catch(Exception e){
+      e.printStackTrace();
+      result = internalServerError("Internal Server Error");
+      Ebean.rollbackTransaction();
+
+    } finally{
+      Ebean.endTransaction();
+    }
+    return result;
+  }
+
+  public static Result delete(Long id){
+
+      Result result = null;
+
+      Ebean.beginTransaction();
+
+      try{
+
+        {{modelName}} {{modelName | lower}} = {{modelName}}.finder.byId(id);
+
+         if ({{modelName | lower}} != null) {
+           {{modelName}}.finder.byId(id).delete();
+           result = ok();
+         } else {
+           result = notFound();
+         }
+
+        Ebean.commitTransaction();
+
+      } catch(Exception e){
+        e.printStackTrace();
+        Ebean.rollbackTransaction();
+        result = internalServerError("Internal Server Error");
+
+      } finally{
+        Ebean.endTransaction();
+      }
+
+      return result;
+  }
+
+}

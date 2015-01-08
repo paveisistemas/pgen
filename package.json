@@ -1,0 +1,31 @@
+{
+  "name": "pgen",
+  "version": "1.0.3",
+  "description": "Play Framework Model and Controller Generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "play",
+    "framework",
+    "model",
+    "scaffold"
+  ],
+  "author": "Pavei Sistemas <vinicius@paveisistemas.com>",
+  "license": "BSD-2-Clause",
+  "devDependencies": {
+    "commander": "~2.6.0"
+  },
+  "bin": {
+    "pgen": "index.js"
+  },
+  "repository": "git://github.com/baugarten/node-restful",
+  "dependencies": {
+    "commander": "~2.6.0",
+    "swig": "~1.4.2",
+    "pluralize": "~1.1.0",
+    "prototype": "0.0.5",
+    "string": "~3.0.0"
+  }
+}

@@ -1,0 +1,6 @@
+# {{modelName}}
+GET		   /{{modelName | lower | pluralize}}					       controllers.{{modelName | pluralize}}.all()
+GET		   /{{modelName | lower | pluralize}}/:id				     controllers.{{modelName | pluralize}}.find(id : Long)
+POST	   /{{modelName | lower | pluralize}}					       controllers.{{modelName | pluralize}}.save()
+PUT		   /{{modelName | lower | pluralize}}/:id				     controllers.{{modelName | pluralize}}.update(id : Long)
+DELETE	 /{{modelName | lower | pluralize}}/:id				     controllers.{{modelName | pluralize}}.delete(id : Long)

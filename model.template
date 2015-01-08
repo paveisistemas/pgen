@@ -1,0 +1,77 @@
+package models;
+
+import java.util.Date;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Table;
+
+import play.db.ebean.Model;
+
+import com.avaje.ebean.annotation.CreatedTimestamp;
+import com.avaje.ebean.annotation.UpdatedTimestamp;
+
+
+
+@Entity
+@Table(name="{{modelName | pluralize | underscore}}")
+public class {{modelName }} extends Model{
+
+  private static final long serialVersionUID = 1L;
+
+
+  @Id
+  @GeneratedValue(strategy=GenerationType.IDENTITY)
+  public Long id;
+{% for arg in args %}
+  @Column(name="{{arg.name | underscore}}")
+  public {{arg.type}} {{arg.name}};
+{% endfor %}
+  @Column(name = "created_at")
+  @CreatedTimestamp
+  public Date createdAt;
+
+  @Column(name = "updated_at")
+  @UpdatedTimestamp
+  public Date updatedAt;
+
+
+  public static Model.Finder<Long, {{modelName}}> finder = new Model.Finder<Long, {{modelName}}>(Long.class, {{modelName}}.class);
+
+  public Long getId() {
+    return id;
+  }
+
+  public void setId(Long id) {
+    this.id = id;
+ }
+
+ {% for arg in args %}
+  public {{arg.type}} get{{arg.name | firstUp }}(){
+    return this.{{arg.name}};
+  }
+
+  public void set{{arg.name | firstUp}}({{arg.type}} {{arg.name}}){
+     this.{{arg.name}} = {{arg.name}};
+  }
+  {% endfor %}
+  public Date getUpdatedAt() {
+    return updatedAt;
+  }
+
+  public void setUpdatedAt(Date updatedAt) {
+    this.updatedAt = updatedAt;
+  }
+
+  public Date getCreatedAt(){
+    return this.createdAt;
+  }
+
+  public void setCreatedAt(Date createdAt){
+     this.createdAt = createdAt;
+  }
+
+}

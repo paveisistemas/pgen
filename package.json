@@ -20,7 +20,7 @@
   "bin": {
     "pgen": "index.js"
   },
-  "repository": "git://github.com/baugarten/node-restful",
+  "repository": "git://github.com/paveisistemas/pgen",
   "dependencies": {
     "commander": "~2.6.0",
     "swig": "~1.4.2",
